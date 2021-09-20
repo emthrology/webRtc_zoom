@@ -35,3 +35,18 @@
 
 
 const socket = io();
+const welcome = document.querySelector("#welcome");
+const form = document.querySelector("form");
+
+function handleRoomSubmit(evt,target) {
+  evt.preventDefault();
+  const input = target.querySelector("input");
+  //socketIO is able to make custom event, which is why socketIO is event-based
+  //third parameter is callback from server
+  socket.emit("enter_room", { payload: input.value }, (...args) => {
+    console.log(args);
+  });
+  input.value = "";
+}
+
+form.addEventListener("submit", (e) => handleRoomSubmit(e, form));

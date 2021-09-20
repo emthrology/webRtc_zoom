@@ -11,6 +11,9 @@ html(lang="en")
       h1 Welcom to Noom
 
     main
-      
+      div#welcome
+      form
+        input(type="text", placeholder="room name", required)
+        button Enter Room
     script(src="/socket.io/socket.io.js")
     script(src="/public/js/app.js") 

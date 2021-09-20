@@ -20,7 +20,20 @@ const wsServer = SocketIO(httpServer);
 
 //SocketIO
 wsServer.on("connection", socket => {
-  console.log({socket});
+  //socketIO is able to make custom event, which is why socketIO is event-based
+  socket.on("enter_room", (msg,done) => {
+    console.log(msg);
+    let obj = {
+      type: "test",
+      payloads: {
+        label: "labelTest",
+        value: "valueTest"
+      }
+    }
+
+    //mock async
+    setTimeout(() => done("1",obj,"3"),0);
+  });
 })
 
 /* WebSocket 
