@@ -1,5 +1,6 @@
 import http from "http";
-import WebSocket from "ws";
+// import WebSocket from "ws";
+import SocketIO from "socket.io";
 import express from "express";
 
 const app = express();
@@ -14,15 +15,17 @@ app.get("/*", (req,res) => res.redirect("/"));
 
 
 //make both http server & ws server on the same server and port (not necessary wss is on http server, wss is independant)
-const server = http.createServer(app);
+const httpServer = http.createServer(app);
+const wsServer = SocketIO(httpServer);
+
+//SocketIO
+wsServer.on("connection", socket => {
+  console.log({socket});
+})
+
+/* WebSocket 
 const wss = new WebSocket.Server({ server });
-
-
-const handleListen = () => console.log("listening on 'http://localhost:3000'");
-
-
 const sockets = [];
-
 wss.on("connection", (socket) => {
   sockets.push(socket); //??
   
@@ -46,4 +49,8 @@ wss.on("connection", (socket) => {
     console.log("disconnected from browser");
   });
 });
-server.listen(3000,handleListen);
+*/
+
+const handleListen = () => console.log("listening on 'http://localhost:3000'");
+
+httpServer.listen(3000,handleListen);

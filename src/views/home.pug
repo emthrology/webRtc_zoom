@@ -11,13 +11,6 @@ html(lang="en")
       h1 Welcom to Noom
 
     main
-      form#nickName
-        input(type="text", placeholder="choose a nickname", required)
-        button Save
-
-      ul 
-      form#message
-        input(type="text", placeholder="write sth", required)
-        button Send
-
+      
+    script(src="/socket.io/socket.io.js")
     script(src="/public/js/app.js") 
