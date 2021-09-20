@@ -26,11 +26,10 @@ const sockets = [];
 wss.on("connection", (socket) => {
   sockets.push(socket);
   console.log("connected to browser");
-  socket.send("hello from server");
+  socket.send("connected to the server");
   socket.on("message",(msg) => {
-    socket.send(msg.toString("utf-8"));
     sockets.forEach(aSocket => {
-      if(socket !== aSocket) aSocket.send(msg.toString("utf-8"))
+      aSocket.send(msg.toString("utf-8"))
     })
   });
   socket.on("close", () => {
