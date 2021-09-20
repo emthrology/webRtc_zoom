@@ -67,4 +67,17 @@ function showRoom() {
   h3.innerText = `Room ${roomName}`;
 }
 
+function addMessage(msg) {
+  const ul = room.querySelector("ul");
+  const li = document.createElement("li");
+  li.innerText = msg;
+  ul.appendChild(li);
+}
+
 form.addEventListener("submit", (e) => handleRoomSubmit(e, form));
+
+//handle custom event from server
+socket.on("welcome", () => {
+  addMessage("Someone joined");
+});
+
