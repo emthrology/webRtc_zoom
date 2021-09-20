@@ -24,13 +24,23 @@ const handleListen = () => console.log("listening on 'http://localhost:3000'");
 const sockets = [];
 
 wss.on("connection", (socket) => {
-  sockets.push(socket);
+  sockets.push(socket); //??
+  
+  socket["nickName"] = "annonymous";
   console.log("connected to browser");
   socket.send("connected to the server");
   socket.on("message",(msg) => {
-    sockets.forEach(aSocket => {
-      aSocket.send(msg.toString("utf-8"))
-    })
+    const msgObj = JSON.parse(msg);
+    switch(msgObj.type) {
+      case "message":
+        sockets.forEach(aSocket => {
+          aSocket.send(`${socket.nickName}: ${msgObj.payload}`);
+        });
+        break;
+      case "nickName":
+        //put nickname in the socket object element of sockets array;
+        socket["nickName"] = msgObj.payload;
+    }
   });
   socket.on("close", () => {
     console.log("disconnected from browser");
