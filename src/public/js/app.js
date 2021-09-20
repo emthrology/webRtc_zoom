@@ -36,7 +36,12 @@
 
 const socket = io();
 const welcome = document.querySelector("#welcome");
-const form = document.querySelector("form");
+const form = welcome.querySelector("form");
+const room = document.querySelector("#room");
+
+room.hidden = true;
+
+let roomName;
 
 function handleRoomSubmit(evt,target) {
   evt.preventDefault();
@@ -49,8 +54,17 @@ function handleRoomSubmit(evt,target) {
     (...args) => {
       console.log("bacnend job is done");
       console.log(args); 
+      showRoom();
   });
+  roomName = input.value;
   input.value = "";
+}
+
+function showRoom() {
+  welcome.hidden = true;
+  room.hidden = false;
+  const h3 = room.querySelector("h3");
+  h3.innerText = `Room ${roomName}`;
 }
 
 form.addEventListener("submit", (e) => handleRoomSubmit(e, form));
