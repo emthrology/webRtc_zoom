@@ -17,13 +17,21 @@ app.get("/*", (req,res) => res.redirect("/"));
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
+
 const handleListen = () => console.log("listening on 'http://localhost:3000'");
 
+
+const sockets = [];
+
 wss.on("connection", (socket) => {
+  sockets.push(socket);
   console.log("connected to browser");
   socket.send("hello from server");
   socket.on("message",(msg) => {
-    console.log(msg.toString("utf-8"));
+    socket.send(msg.toString("utf-8"));
+    sockets.forEach(aSocket => {
+      if(socket !== aSocket) aSocket.send(msg.toString("utf-8"))
+    })
   });
   socket.on("close", () => {
     console.log("disconnected from browser");
