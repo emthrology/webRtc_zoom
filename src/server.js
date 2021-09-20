@@ -21,18 +21,13 @@ const wsServer = SocketIO(httpServer);
 //SocketIO
 wsServer.on("connection", socket => {
   //socketIO is able to make custom event, which is why socketIO is event-based
-  socket.on("enter_room", (msg,done) => {
-    console.log(msg);
-    let obj = {
-      type: "test",
-      payloads: {
-        label: "labelTest",
-        value: "valueTest"
-      }
-    }
+  socket.on("enter_room", (roomName, done) => {
+    console.log(roomName.payload);
 
     //mock async
-    setTimeout(() => done("1",obj,"3"),0);
+    //when function done is called, function at the front(emit's thrid argument) is invoked
+    //NOT the backend's function
+    setTimeout(() => done("this is from backend"),0);
   });
 })
 
