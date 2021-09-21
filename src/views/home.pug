@@ -11,13 +11,21 @@ html(lang="en")
       h1 Welcom to Noom
 
     main
-      form#nickName
-        input(type="text", placeholder="choose a nickname", required)
-        button Save
-
-      ul 
-      form#message
-        input(type="text", placeholder="write sth", required)
-        button Send
-
+      div#welcome
+        form
+          input#room-info(type="text", placeholder="room name", required)
+          input#nick(type="text", placeholder="edit nickname")
+          button Enter Room
+        h4 Open Rooms:
+        ul
+      div#room
+        h3
+        ul
+        form#name
+          input(type="text", placeholder="edit nickname", required)
+          button Edit
+        form#message
+          input(type="text", placeholder="chat", required)
+          button Send
+    script(src="/socket.io/socket.io.js")
     script(src="/public/js/app.js") 
